@@ -1,0 +1,14 @@
+{
+  "name": "Sampoorn Nagpal",
+  "username": "Sampoornnagpal",
+  "focus": "AI agents & useful software",
+  "approach": "Build. Evaluate. Improve.",
+  "languages": "Python / JavaScript / Swift",
+  "frameworks": "FastAPI / React / SwiftUI",
+  "exploring": "RAG / MCP / agent evaluation",
+  "projects": [
+    {"name": "Agent Evaluation", "summary": "Metrics and evaluation tools for AI agents."},
+    {"name": "AI Cowork", "summary": "Team AI workspace with RAG and MCP tools."},
+    {"name": "RescueMesh", "summary": "Exploring emergency messaging over BLE."}
+  ]
+}
