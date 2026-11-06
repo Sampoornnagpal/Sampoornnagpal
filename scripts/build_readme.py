@@ -17,14 +17,14 @@ def build():
     e = lambda value: escape(str(value), quote=True)
     contribution = p['contribution']
     org = p['organization']
-    # Native-size bold monospace keeps the cleaned face legible. The portrait
-    # already compensates for the spacing of GitHub's monospace line boxes.
+    # Preserve the original grid and the previous display size. Background
+    # removal changes only characters outside the subject to spaces.
     readme = f'''<p><samp>~/Sampoornnagpal &nbsp; $ whoami</samp></p>
 
 <table>
 <tr>
 <td valign="top">
-<pre><b>{escape(portrait, quote=False)}</b></pre>
+<sub><sub><pre>{escape(portrait, quote=False)}</pre></sub></sub>
 </td>
 <td valign="middle">
 <h2>{e(p['name'])}</h2>
@@ -60,7 +60,7 @@ def build():
 <p align="center"><samp>{e(p['approach'])}</samp></p>
 '''
     (ROOT / 'README.md').write_text(readme)
-    print(f'Built README.md with a bold {len(lines)} × {len(lines[0])} ASCII portrait.')
+    print(f'Built README.md with the original {len(lines)} × {len(lines[0])} ASCII grid.')
 
 if __name__ == '__main__':
     build()

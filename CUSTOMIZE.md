@@ -1,6 +1,6 @@
 # Updating this profile
 
-The portrait in `README.md` is literal ASCII text, derived from the supplied portrait. Its background characters have been removed and its framing focuses on the head and shoulders. No portrait PNG, SVG, remote card or image embed is used.
+The portrait in `README.md` is literal ASCII text, derived from the supplied portrait. Only the background characters have been replaced with spaces; the original framing and character positions are preserved. No portrait PNG, SVG, remote card or image embed is used.
 
 ## Change the profile
 
@@ -12,8 +12,8 @@ The generator uses only Python's standard library. The short hero copy and its l
 
 ## Portrait and layout
 
-`assets/portrait.txt` stores the cleaned 79-column, 32-row portrait. The face and hair use characters from the supplied ASCII art. Background characters were replaced with spaces, and the view was cropped to the head and shoulders. Repeated shading rows were omitted to compensate for GitHub's tall monospace line spacing and keep the face's proportions closer to the photo.
+`assets/portrait.txt` keeps the supplied 140-column, 70-row grid. Only background characters were replaced with spaces. No rows were skipped, no columns were cropped, and no retained subject characters were changed or moved.
 
-The art is HTML-escaped into a bold `pre` element at GitHub's native code size. Keep each line the same width and use spaces rather than tabs when editing. Run the generator after changing the art. On narrow screens the table can scroll horizontally.
+The art is HTML-escaped into a plain `pre` element, with the two surrounding `sub` elements restoring the display size used before the bold/crop edit. No bold styling is applied to the portrait. Keep each line the same width and use spaces rather than tabs when editing. Run the generator after changing the art. On narrow screens the table can scroll horizontally.
 
 The contribution status is a verified highlight, not a live counter. Update it manually when choosing a different contribution to feature.
