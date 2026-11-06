@@ -1,59 +1,66 @@
 #!/usr/bin/env python3
-"""Build a text-only GitHub profile README from stored ASCII and profile data."""
+"""Build the profile around the user's original, unchanged ASCII portrait."""
 import json
+from html import escape
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
 def build():
-    profile = json.loads((ROOT / 'profile.json').read_text())
-    portrait = (ROOT / 'assets/portrait.txt').read_text().splitlines()
-    if not portrait or any(not row.isascii() for row in portrait):
-        raise ValueError('The portrait must use ordinary ASCII characters.')
-    width = max(map(len, portrait))
-    bio = {
-        2: profile['name'],
-        3: '@' + profile['username'],
-        4: '-' * 28,
-        6: 'Focus',
-        7: profile['focus'],
-        10: 'Stack',
-        11: profile['languages'],
-        12: profile['frameworks'],
-        15: 'Exploring',
-        16: profile['exploring'],
-        19: 'Projects',
-        20: profile['projects'][0]['name'],
-        21: profile['projects'][1]['name'],
-        22: 'RescueMesh (iOS + Android)',
-        25: 'Approach',
-        26: profile['approach'],
-        29: 'GitHub',
-        30: 'github.com/' + profile['username'],
-    }
-    lines = [f'{row:<{width}}   {bio.get(i, "")}'.rstrip() for i, row in enumerate(portrait)]
-    if max(map(len, lines)) > 96:
-        raise ValueError('Keep lines within 96 characters for the GitHub profile layout.')
-    if any('```' in line for line in lines):
-        raise ValueError('A line would terminate the Markdown code fence.')
-    readme = '```text\n' + '\n'.join(lines) + '\n```\n\n'
-    readme += '''[Agent Evaluation](https://github.com/Sampoornnagpal/Agent-Evaluation) · [AI Cowork](https://github.com/Sampoornnagpal/coworkAI) · [RescueMesh iOS](https://github.com/Sampoornnagpal/RescueMesh_iOS) · [RescueMesh Android](https://github.com/Sampoornnagpal/RescueMesh_Android)
+    p = json.loads((ROOT / 'profile.json').read_text())
+    portrait = (ROOT / 'assets/portrait.txt').read_text()
+    lines = portrait.splitlines()
+    if not portrait.isascii() or any('\t' in line for line in lines):
+        raise ValueError('The portrait must contain ASCII text with spaces, not tabs.')
+    if len(set(map(len, lines))) != 1:
+        raise ValueError('Every portrait row must have the same width.')
+    e = lambda value: escape(str(value), quote=True)
+    contribution = p['contribution']
+    org = p['organization']
+    # Nested sub elements reduce the PRE font as a whole. PRE still controls line
+    # height and whitespace; the source portrait retains every original character.
+    readme = f'''<p><samp>~/Sampoornnagpal &nbsp; $ whoami</samp></p>
 
-<details>
-<summary>About me · accessible text</summary>
+<table>
+<tr>
+<td valign="top">
+<sub><sub><pre>{escape(portrait, quote=False)}</pre></sub></sub>
+</td>
+<td valign="middle">
+<h2>{e(p['name'])}</h2>
+<p>Building AI tools.<br>Testing how they behave.</p>
+<p><samp>FOCUS</samp><br><b>AI agents &amp;<br>evaluation</b></p>
+<p><samp>LANGUAGES</samp><br>Python · JavaScript<br>Swift</p>
+<p><samp>WORKING WITH</samp><br>FastAPI · React<br>SwiftUI · DeepEval</p>
+<p><samp>EXPLORING</samp><br>RAG · MCP<br>Agent memory</p>
+<p><samp>OPEN SOURCE</samp><br>NVIDIA NeMo<br><a href="{e(contribution['url'])}">Merged contribution ↗</a></p>
+<p><a href="{e(org['url'])}">{e(org['name'])} ↗</a></p>
+</td>
+</tr>
+</table>
 
-I'm **Sampoorn Nagpal**. I build AI tools and explore how to evaluate agents and connect useful systems.
+### Selected work
 
-- **Agent Evaluation** — evaluation tools with FastAPI, React and DeepEval.
-- **AI Cowork** — a team AI workspace with document RAG, MCP tools and an LLM gateway.
-- **RescueMesh** — exploring emergency messaging over Bluetooth Low Energy.
+| Project | What I'm building | Tools |
+| :--- | :--- | :--- |
+'''
+    for project in p['projects']:
+        link = f"**[{project['name']}]({project['url']})**"
+        if 'secondary_url' in project:
+            link += f"<br>[iOS]({project['url']}) · [Android]({project['secondary_url']})"
+        readme += f"| {link} | {project['summary']} | {project['stack']} |\n"
+    readme += f'''
+### Open source
 
-My project stack includes **Python, JavaScript, Swift, FastAPI, React and SwiftUI**.
+**[{contribution['repository']} #{contribution['number']}]({contribution['url']}) · {contribution['status']}**  
+{contribution['summary']}
 
-</details>
+---
+
+<p align="center"><samp>{e(p['approach'])}</samp></p>
 '''
     (ROOT / 'README.md').write_text(readme)
-    print(f'Built README.md: {len(portrait)} portrait rows; maximum line width {max(map(len, lines))}.')
+    print(f'Built README.md with all {len(lines)} × {len(lines[0])} supplied ASCII characters preserved.')
 
 if __name__ == '__main__':
     build()

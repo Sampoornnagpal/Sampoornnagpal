@@ -1,14 +1,22 @@
 {
   "name": "Sampoorn Nagpal",
   "username": "Sampoornnagpal",
-  "focus": "AI agents & useful software",
+  "focus": "AI agents & evaluation",
   "approach": "Build. Evaluate. Improve.",
-  "languages": "Python / JavaScript / Swift",
-  "frameworks": "FastAPI / React / SwiftUI",
-  "exploring": "RAG / MCP / agent evaluation",
+  "languages": ["Python", "JavaScript", "Swift"],
+  "frameworks": ["FastAPI", "React", "SwiftUI", "DeepEval"],
+  "exploring": ["RAG", "MCP", "Agent memory"],
+  "organization": {"name": "NoSlack Labs", "url": "https://github.com/noslacklabs"},
   "projects": [
-    {"name": "Agent Evaluation", "summary": "Metrics and evaluation tools for AI agents."},
-    {"name": "AI Cowork", "summary": "Team AI workspace with RAG and MCP tools."},
-    {"name": "RescueMesh", "summary": "Exploring emergency messaging over BLE."}
-  ]
+    {"name": "Agent Evaluation", "url": "https://github.com/Sampoornnagpal/Agent-Evaluation", "summary": "Tools to evaluate AI agents, RAG and multi-turn conversations.", "stack": "Python · FastAPI · React · DeepEval"},
+    {"name": "AI Cowork", "url": "https://github.com/Sampoornnagpal/coworkAI", "summary": "A self-hosted team AI workspace with document RAG, MCP tools and an LLM gateway.", "stack": "Python · FastAPI · React"},
+    {"name": "RescueMesh", "url": "https://github.com/Sampoornnagpal/RescueMesh_iOS", "secondary_url": "https://github.com/Sampoornnagpal/RescueMesh_Android", "summary": "Collaborative work on emergency messaging over Bluetooth Low Energy.", "stack": "Swift · SwiftUI · BLE"}
+  ],
+  "contribution": {
+    "repository": "NVIDIA-NeMo/labs-OO-Agents",
+    "url": "https://github.com/NVIDIA-NeMo/labs-OO-Agents/pull/529",
+    "number": 529,
+    "status": "Merged",
+    "summary": "Fixed memory injection accounting so only memories retained within the context budget are counted."
+  }
 }
