@@ -1,6 +1,6 @@
 # Updating this profile
 
-The portrait in `README.md` is literal ASCII text. `assets/portrait.txt` preserves the supplied 140-column, 70-row portrait exactly. No portrait PNG, SVG, remote card or image embed is used.
+The portrait in `README.md` is literal ASCII text, derived from the supplied portrait. Its background characters have been removed and its framing focuses on the head and shoulders. No portrait PNG, SVG, remote card or image embed is used.
 
 ## Change the profile
 
@@ -12,8 +12,8 @@ The generator uses only Python's standard library. The short hero copy and its l
 
 ## Portrait and layout
 
-The original art is HTML-escaped into a `pre` element in the Markdown file, which keeps every character and line break. Two surrounding `sub` elements reduce the entire portrait's type size, including its line height, so the full supplied art can sit beside the bio. GitHub supplies the monospace font. On narrow screens the table can scroll horizontally.
+`assets/portrait.txt` stores the cleaned 79-column, 32-row portrait. The face and hair use characters from the supplied ASCII art. Background characters were replaced with spaces, and the view was cropped to the head and shoulders. Repeated shading rows were omitted to compensate for GitHub's tall monospace line spacing and keep the face's proportions closer to the photo.
 
-To replace the art, copy the new text into `assets/portrait.txt`, keep its rows equal in length, and run the generator. Do not resize, resample or regenerate the current portrait.
+The art is HTML-escaped into a bold `pre` element at GitHub's native code size. Keep each line the same width and use spaces rather than tabs when editing. Run the generator after changing the art. On narrow screens the table can scroll horizontally.
 
 The contribution status is a verified highlight, not a live counter. Update it manually when choosing a different contribution to feature.

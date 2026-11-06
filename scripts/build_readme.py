@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the profile around the user's original, unchanged ASCII portrait."""
+"""Build the profile around the user's cleaned ASCII portrait."""
 import json
 from html import escape
 from pathlib import Path
@@ -17,14 +17,14 @@ def build():
     e = lambda value: escape(str(value), quote=True)
     contribution = p['contribution']
     org = p['organization']
-    # Nested sub elements reduce the PRE font as a whole. PRE still controls line
-    # height and whitespace; the source portrait retains every original character.
+    # Native-size bold monospace keeps the cleaned face legible. The portrait
+    # already compensates for the spacing of GitHub's monospace line boxes.
     readme = f'''<p><samp>~/Sampoornnagpal &nbsp; $ whoami</samp></p>
 
 <table>
 <tr>
 <td valign="top">
-<sub><sub><pre>{escape(portrait, quote=False)}</pre></sub></sub>
+<pre><b>{escape(portrait, quote=False)}</b></pre>
 </td>
 <td valign="middle">
 <h2>{e(p['name'])}</h2>
@@ -60,7 +60,7 @@ def build():
 <p align="center"><samp>{e(p['approach'])}</samp></p>
 '''
     (ROOT / 'README.md').write_text(readme)
-    print(f'Built README.md with all {len(lines)} × {len(lines[0])} supplied ASCII characters preserved.')
+    print(f'Built README.md with a bold {len(lines)} × {len(lines[0])} ASCII portrait.')
 
 if __name__ == '__main__':
     build()
